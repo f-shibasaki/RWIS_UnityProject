@@ -121,7 +121,14 @@ public class Board : MonoBehaviour
         {
             if (grid[x, y] != null)
             {
-                Destroy(grid[x, y].gameObject);
+                if (grid[x, y].parent.transform.childCount > 1)
+                {
+                    Destroy(grid[x, y].gameObject);
+                } 
+                else
+                {
+                    Destroy(grid[x, y].parent.gameObject);
+                }
             }
             grid[x, y] = null;
         }

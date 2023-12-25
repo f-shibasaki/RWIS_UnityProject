@@ -16,9 +16,25 @@ public class GameManager : MonoBehaviour
 
     Board board;
 
-    float nextKeyDropTimer, nextKeyShiftTimer, nextKeyRotateTimer; // 入力受付タイマー
-    [SerializeField] // 入力インターバル
-    private float nextKeyDropInterval, nextKeyShiftInterval, nextKeyRotateInterval;
+    float nextKeyDropTimer, nextKeyShiftTimer, nextKeyRotateTimer, nextShakeTimer; // 入力受付タイマー
+    // 入力インターバル
+    [SerializeField]
+    private float nextKeyDropInterval = 0.02f;
+    [SerializeField]
+    private float nextKeyShiftInterval = 0.25f;
+    [SerializeField]
+    private float nextKeyRotateInterval = 0.50f;
+    [SerializeField]
+    private float nextShakeInterval = 0.20f;
+
+    private Quaternion inputGyro; // 入力姿勢
+    private Quaternion initPose; // 初期姿勢
+    private Quaternion newPose; // 現在の姿勢
+    Vector3 angles; // 相対角度
+
+    [SerializeField]
+    float shakeThreshold = 2f;
+    Vector3 acceleration, prevAcceleration;
 
     [SerializeField]
     private GameObject gameOverPanel;
@@ -27,6 +43,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Input.gyro.enabled = true;
+        inputGyro = Input.gyro.attitude;
+        initPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
+
+        acceleration.Set(-Input.acceleration.x, 0, 0);
+
         spawner = GameObject.FindObjectOfType<Spawner>();
         board = GameObject.FindObjectOfType<Board>();
 
@@ -35,6 +57,7 @@ public class GameManager : MonoBehaviour
         nextKeyDropTimer = Time.time + nextKeyDropInterval;
         nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
         nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
+        nextShakeTimer = Time.time + nextShakeInterval;
 
         for (int i = 0; i < 5; i++)
         {
@@ -64,13 +87,22 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        inputGyro = Input.gyro.attitude;
+        newPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
+        angles = (Quaternion.Inverse(initPose) * newPose).eulerAngles;
+
+        prevAcceleration = acceleration;
+        acceleration.Set(-Input.acceleration.x, 0, 0);
+
         PlayerInput();
     }
 
     // 入力を検知してブロックを移動
     void PlayerInput ()
     {
-        if (Input.GetKey(KeyCode.D) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.D))
+        // 右移動
+        if (Input.GetKey(KeyCode.D) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.D)
+            || (angles.y > 270) && (angles.y < 330) && (Time.time > nextKeyShiftTimer))
         {
             activeBlock.MoveRight();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
@@ -80,7 +112,9 @@ public class GameManager : MonoBehaviour
                 activeBlock.MoveLeft();
             }
         }
-        else if (Input.GetKey(KeyCode.A) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.A))
+        // 左移動
+        else if (Input.GetKey(KeyCode.A) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.A)
+            || (angles.y > 30) && (angles.y < 90) && (Time.time > nextKeyShiftTimer))
         {
             activeBlock.MoveLeft();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
@@ -90,26 +124,35 @@ public class GameManager : MonoBehaviour
                 activeBlock.MoveRight();
             }
         }
-        else if (Input.GetKey(KeyCode.E) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.E))
+        // 時計回り
+        else if (Input.GetKey(KeyCode.E) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.E)
+            // || (angles.z > 270) && (angles.z < 330) && (Time.time > nextKeyRotateTimer)
+            || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x > 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
         {
             activeBlock.RotateRight();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
+            nextShakeTimer = Time.time + nextShakeInterval;
 
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.RotateLeft();
             }
         }
-        else if (Input.GetKey(KeyCode.Q) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.Q))
+        // 反時計回り
+        else if (Input.GetKey(KeyCode.Q) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.Q)
+            // || (angles.z > 30) && (angles.z < 90) && (Time.time > nextKeyRotateTimer)
+            || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
         {
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
+            nextShakeTimer = Time.time + nextShakeInterval;
 
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.RotateRight();
             }
         }
+        // 裏返す
         else if (Input.GetKey(KeyCode.W) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.W))
         {
             activeBlock.RotateUp();
@@ -120,7 +163,10 @@ public class GameManager : MonoBehaviour
                 activeBlock.RotateUp();
             }
         }
-        else if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer))
+        // 下移動
+        else if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
+            // || (angles.x > 270) && (angles.x < 300) && (Time.time > nextKeyDropTimer)
+            )
         {
             activeBlock.MoveDown();
             nextKeyDropTimer = Time.time + nextKeyDropInterval;
