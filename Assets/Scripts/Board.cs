@@ -164,10 +164,4 @@ public class Board : MonoBehaviour
 
         return false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

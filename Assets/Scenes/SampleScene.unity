@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc624f604767d144ac9fd6163c7279d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropInterval: 0.25
+  dropInterval: 0.5
   nextKeyDropInterval: 0.02
   nextKeyShiftInterval: 0.25
   nextKeyRotateInterval: 0.5

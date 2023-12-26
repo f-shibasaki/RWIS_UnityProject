@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
     Spawner spawner;
     Block activeBlock; // 落ちてくるブロック
     Queue<Block> upcomingBlocks = new Queue<Block>(); // 今後のブロック
-    Block tmpBlock; // ホールドしたブロック
+    Block holdBlock; // ホールドしたブロック
 
     [SerializeField]
-    private float dropInterval = 0.25f; // ブロックが停止している時間
+    private float dropInterval = 0.5f; // ブロックが停止している時間
     float nextDropTimer; // 次にブロックが1マス落ちる時間
 
     Board board;
@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
         inputGyro = Input.gyro.attitude;
         initPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
 
-        acceleration.Set(-Input.acceleration.x, 0, 0);
+        // acceleration.Set(-Input.acceleration.x, 0, 0); // 横方向のみ（回転を左右で分ける用）
+        acceleration.Set(-Input.acceleration.x, -Input.acceleration.y, Input.acceleration.z);
 
         spawner = GameObject.FindObjectOfType<Spawner>();
         board = GameObject.FindObjectOfType<Board>();
@@ -92,7 +93,7 @@ public class GameManager : MonoBehaviour
         angles = (Quaternion.Inverse(initPose) * newPose).eulerAngles;
 
         prevAcceleration = acceleration;
-        acceleration.Set(-Input.acceleration.x, 0, 0);
+        acceleration.Set(-Input.acceleration.x, -Input.acceleration.y, Input.acceleration.z);
 
         PlayerInput();
     }
@@ -127,7 +128,8 @@ public class GameManager : MonoBehaviour
         // 時計回り
         else if (Input.GetKey(KeyCode.E) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.E)
             // || (angles.z > 270) && (angles.z < 330) && (Time.time > nextKeyRotateTimer)
-            || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x > 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
+            // || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x > 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer)
+            )
         {
             activeBlock.RotateRight();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
@@ -141,12 +143,13 @@ public class GameManager : MonoBehaviour
         // 反時計回り
         else if (Input.GetKey(KeyCode.Q) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.Q)
             // || (angles.z > 30) && (angles.z < 90) && (Time.time > nextKeyRotateTimer)
-            || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
+            // || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer)
+            || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
         {
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
-
+            
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.RotateRight();
@@ -184,6 +187,13 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        // ホールド
+        else if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H))
+        {
+            HoldBlock();
+
+            nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
+        }
     }
 
     void BlockAtBottom()
@@ -208,6 +218,32 @@ public class GameManager : MonoBehaviour
         nextKeyRotateTimer = Time.time;
 
         board.ClearFilledRows();
+    }
+
+    void HoldBlock()
+    {
+        if (holdBlock)
+        {
+            Block tmpBlock = holdBlock;
+            Vector3 currentPosition = activeBlock.transform.position;
+
+            holdBlock = activeBlock;
+            holdBlock.transform.position = new Vector3(-2, 20, -1);
+            holdBlock.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
+            activeBlock = tmpBlock;
+            activeBlock.transform.position = currentPosition;
+        }
+        else
+        {
+            Vector3 currentPosition = activeBlock.transform.position;
+            holdBlock = activeBlock;
+            holdBlock.transform.position = new Vector3(-2, 20, -1);
+            holdBlock.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
+            activeBlock = upcomingBlocks.Dequeue();
+            activeBlock.transform.position = currentPosition;
+        }
     }
 
     // ゲームオーバーメニューの表示
