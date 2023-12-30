@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour
     public Action StartGameDelegate { get; set; }
     public Action PauseGameDelegate { get; set; }
     public Action ResumeGameDelegate { get; set; }
+    public Action ResetGyroDelegate { get; set; }
 
     void Awake()
     {
@@ -34,6 +35,7 @@ public class UIController : MonoBehaviour
         _pausePanel.OnClickResumeButton = OnResumeGame;
         _pausePanel.OnClickRetryButton = OnStartGame;
         _pausePanel.OnClickHomeButton = OnReturnHome;
+        _pausePanel.OnClickResetGyroButton = OnResetGyro;
         
         _gameOverPanel.OnRestartGame = OnStartGame;
         _gameOverPanel.OnReturnHome = OnReturnHome;
@@ -82,6 +84,11 @@ public class UIController : MonoBehaviour
         
         _pausePanel.gameObject.SetActive(false);
         _gamePanel.gameObject.SetActive(true);
+    }
+    
+    public void OnResetGyro()
+    {
+        ResetGyroDelegate.Invoke();
     }
 
     private void DisableAllPanels()

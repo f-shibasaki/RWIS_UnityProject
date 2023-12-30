@@ -15,6 +15,7 @@ public class AppManager : MonoBehaviour
         _uiController.StartGameDelegate = StartGame;
         _uiController.PauseGameDelegate = PauseGame;
         _uiController.ResumeGameDelegate = ResumeGame;
+        _uiController.ResetGyroDelegate = ResetGyro;
     }
 
     void StartGame()
@@ -41,6 +42,11 @@ public class AppManager : MonoBehaviour
     void ResumeGame()
     {
         _gameManager.Resume();
+    }
+    
+    void ResetGyro()
+    {
+        _gameManager.ResetGyro();
     }
 
     void OnGameOver()

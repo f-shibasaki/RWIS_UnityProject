@@ -10,12 +10,17 @@ public class PausePanel : MonoBehaviour
     private Button _retryButton;
     [SerializeField]
     private Button _resumeButton;
+
+    [SerializeField]
+    private Button _resetGyroButton;
+
     
 
     public Action OnClickHomeButton { get; set; }
 
     public Action OnClickRetryButton { get; set; }
     public Action OnClickResumeButton { get; set; }
+    public Action OnClickResetGyroButton { get; set; }
 
     void OnEnable()
     {
@@ -31,6 +36,10 @@ public class PausePanel : MonoBehaviour
         {
             OnClickResumeButton.Invoke();
         });
+        _resetGyroButton.onClick.AddListener(() =>
+        {
+            OnClickResetGyroButton.Invoke();
+        });
     }
     
     void OnDisable()
@@ -38,5 +47,6 @@ public class PausePanel : MonoBehaviour
         _homeButton.onClick.RemoveAllListeners();
         _retryButton.onClick.RemoveAllListeners();
         _resumeButton.onClick.RemoveAllListeners();
+        _resetGyroButton.onClick.RemoveAllListeners();
     }
 }

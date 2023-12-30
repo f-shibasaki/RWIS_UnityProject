@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ゲームオーバーメニューの表示
+    // ゲームオーバー処理の実行
     void GameOver()
     {
         activeBlock.MoveUp();
@@ -265,5 +265,12 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         pause = false;
+        
+        Invoke("ResetGyro", 1.0f);
+    }
+
+    public void ResetGyro()
+    {
+        initPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
     }
 }
