@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour
     // ブロックを生成
     public Block SpawnBlock ()
     {
-        Block block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
+        Block block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity, transform.parent);
 
         if (block)
         {

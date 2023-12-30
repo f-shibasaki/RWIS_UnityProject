@@ -1,20 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
     Spawner spawner;
+    
+    [SerializeField]
+    Board board;
+    
     Block activeBlock; // 落ちてくるブロック
+    
     Queue<Block> upcomingBlocks = new Queue<Block>(); // 今後のブロック
     Block holdBlock; // ホールドしたブロック
 
     [SerializeField]
     private float dropInterval = 0.5f; // ブロックが停止している時間
     float nextDropTimer; // 次にブロックが1マス落ちる時間
-
-    Board board;
 
     float nextKeyDropTimer, nextKeyShiftTimer, nextKeyRotateTimer, nextShakeTimer; // 入力受付タイマー
     // 入力インターバル
@@ -36,9 +41,10 @@ public class GameManager : MonoBehaviour
     float shakeThreshold = 2f;
     Vector3 acceleration, prevAcceleration;
 
-    [SerializeField]
-    private GameObject gameOverPanel;
     bool gameOver;
+    private bool pause = true;
+
+    public Action OnGameOverDelegate { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -73,17 +79,12 @@ public class GameManager : MonoBehaviour
         {
             activeBlock = upcomingBlocks.Dequeue();
         }
-
-        if (gameOverPanel.activeInHierarchy)
-        {
-            gameOverPanel.SetActive(false);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameOver)
+        if (gameOver || pause)
         {
             return;
         }
@@ -251,17 +252,18 @@ public class GameManager : MonoBehaviour
     {
         activeBlock.MoveUp();
 
-        if (!gameOverPanel.activeInHierarchy)
-        {
-            gameOverPanel.SetActive(true);
-        }
-
         gameOver = true;
+        
+        OnGameOverDelegate.Invoke();
     }
 
-    // ゲームシーンの再読み込み
-    public void Restart()
+    public void Pause()
     {
-        SceneManager.LoadScene(0);
+        pause = true;
+    }
+    
+    public void Resume()
+    {
+        pause = false;
     }
 }
