@@ -84,7 +84,7 @@ Transform:
   - {fileID: 5890028994398468862}
   - {fileID: 3821576993102594248}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5441543550821234689
 MonoBehaviour:
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc624f604767d144ac9fd6163c7279d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 0}
-  board: {fileID: 0}
+  spawner: {fileID: 6029137173182045067}
+  board: {fileID: 3900779122383929238}
   dropInterval: 0.5
   nextKeyDropInterval: 0.02
   nextKeyShiftInterval: 0.25
