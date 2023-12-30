@@ -20,7 +20,6 @@ public class HomePanel : MonoBehaviour
         _playButton.onClick.AddListener(() =>
         {
             OnPlayGame.Invoke();
-            Debug.Log("Play");
         });
         
         _tutorialButton.onClick.AddListener(() =>

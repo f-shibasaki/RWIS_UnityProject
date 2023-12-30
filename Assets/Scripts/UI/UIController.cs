@@ -26,7 +26,6 @@ public class UIController : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("AWAKE");
         _homePanel.OnPlayGame = OnStartGame;
         _homePanel.OnStartTutorial = OnStartTutorial;
         
