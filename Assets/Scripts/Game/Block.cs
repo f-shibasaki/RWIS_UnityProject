@@ -57,5 +57,4 @@ public class Block : MonoBehaviour
             transform.Rotate(180, 0, 0);
         }
     }
-
 }

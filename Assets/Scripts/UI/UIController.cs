@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     // private GameObject _tutorialPanel;
 
     public Action StartGameDelegate { get; set; }
+    public Action StartTutorialDelegate { get; set; }
     public Action PauseGameDelegate { get; set; }
     public Action ResumeGameDelegate { get; set; }
     public Action ResetGyroDelegate { get; set; }
@@ -61,7 +62,8 @@ public class UIController : MonoBehaviour
     
     public void OnStartTutorial()
     {
-        
+        DisableAllPanels();
+        StartTutorialDelegate.Invoke();
     }
     
     public void OnReturnHome()

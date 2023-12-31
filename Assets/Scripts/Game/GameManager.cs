@@ -42,12 +42,15 @@ public class GameManager : MonoBehaviour
     Vector3 acceleration, prevAcceleration;
 
     bool gameOver;
-    private bool pause = true;
+    bool pause = true;
+    bool isHorizontalMoveEnabled = true;
+    bool isRotationEnabled = true;
+    bool isDropEnabled = true;
 
     public Action OnGameOverDelegate { get; set; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Input.gyro.enabled = true;
         inputGyro = Input.gyro.attitude;
@@ -99,12 +102,11 @@ public class GameManager : MonoBehaviour
         PlayerInput();
     }
 
-    // 入力を検知してブロックを移動
-    void PlayerInput ()
+    public bool MoveInput()
     {
         // 右移動
         if (Input.GetKey(KeyCode.D) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.D)
-            || (angles.y > 270) && (angles.y < 330) && (Time.time > nextKeyShiftTimer))
+                                                                       || (angles.y > 270) && (angles.y < 330) && (Time.time > nextKeyShiftTimer))
         {
             activeBlock.MoveRight();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
@@ -112,11 +114,12 @@ public class GameManager : MonoBehaviour
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.MoveLeft();
+                return true;
             }
         }
         // 左移動
         else if (Input.GetKey(KeyCode.A) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.A)
-            || (angles.y > 30) && (angles.y < 90) && (Time.time > nextKeyShiftTimer))
+                                                                            || (angles.y > 30) && (angles.y < 90) && (Time.time > nextKeyShiftTimer))
         {
             activeBlock.MoveLeft();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
@@ -124,13 +127,19 @@ public class GameManager : MonoBehaviour
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.MoveRight();
+                return true;
             }
         }
+        return false;
+    }
+
+    public bool RotationInput()
+    {
         // 時計回り
-        else if (Input.GetKey(KeyCode.E) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.E)
+        if (Input.GetKey(KeyCode.E) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.E)
             // || (angles.z > 270) && (angles.z < 330) && (Time.time > nextKeyRotateTimer)
             // || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x > 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer)
-            )
+           )
         {
             activeBlock.RotateRight();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
@@ -139,6 +148,7 @@ public class GameManager : MonoBehaviour
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.RotateLeft();
+                return true;
             }
         }
         // 反時計回り
@@ -154,23 +164,18 @@ public class GameManager : MonoBehaviour
             if (!board.CheckPosition(activeBlock))
             {
                 activeBlock.RotateRight();
+                return true;
             }
         }
-        // 裏返す
-        else if (Input.GetKey(KeyCode.W) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.W))
-        {
-            activeBlock.RotateUp();
-            nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
 
-            if (!board.CheckPosition(activeBlock))
-            {
-                activeBlock.RotateUp();
-            }
-        }
-        // 下移動
-        else if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
+        return false;
+    }
+
+    public bool Drop()
+    {
+        if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
             // || (angles.x > 270) && (angles.x < 300) && (Time.time > nextKeyDropTimer)
-            )
+           )
         {
             activeBlock.MoveDown();
             nextKeyDropTimer = Time.time + nextKeyDropInterval;
@@ -187,9 +192,42 @@ public class GameManager : MonoBehaviour
                     BlockAtBottom();
                 }
             }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // 入力を検知してブロックを移動
+    void PlayerInput ()
+    {
+        if (isHorizontalMoveEnabled && MoveInput())
+        {
+            return;
+        }
+        if (isRotationEnabled && RotationInput())
+        {
+            return;
+        }
+        // 裏返す
+        if (Input.GetKey(KeyCode.W) && (Time.time > nextKeyRotateTimer) || Input.GetKeyDown(KeyCode.W)) 
+        {
+            activeBlock.RotateUp();
+            nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
+
+            if (!board.CheckPosition(activeBlock))
+            {
+                activeBlock.RotateUp();
+            }
+        }
+        // 下移動
+        else if (isDropEnabled && Drop())
+        {
+            return;
         }
         // ホールド
-        else if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H))
         {
             HoldBlock();
 
@@ -272,5 +310,26 @@ public class GameManager : MonoBehaviour
     public void ResetGyro()
     {
         initPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
+    }
+    
+
+    public void EnableHorizontalMove()
+    {
+        isHorizontalMoveEnabled = true;
+    }
+    
+    public void EnableRotation()
+    {
+        isRotationEnabled = true;
+    }
+    public void PrepareForTutorial()
+    {
+        activeBlock.transform.position -= new Vector3(0, 10, 0);
+
+        isHorizontalMoveEnabled = false;
+        isRotationEnabled = false;
+        isDropEnabled = false;
+        
+        pause = false;
     }
 }

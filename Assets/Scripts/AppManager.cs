@@ -6,16 +6,38 @@ public class AppManager : MonoBehaviour
     GameObject _gamePrefab;
     
     [SerializeField]
+    GameObject _tutorialPrefab;
+    
+    [SerializeField]
     UIController _uiController;
 
     private GameManager _gameManager;
+    private TutorialManager _tutorialManager;
     
     void Start()
     {
         _uiController.StartGameDelegate = StartGame;
+        _uiController.StartTutorialDelegate = StartTutorial;
         _uiController.PauseGameDelegate = PauseGame;
         _uiController.ResumeGameDelegate = ResumeGame;
         _uiController.ResetGyroDelegate = ResetGyro;
+    }
+    
+    void StartTutorial()
+    {
+        if (_tutorialManager != null)
+        {
+            Destroy(_tutorialManager.gameObject);
+        }
+        _tutorialManager = Instantiate(_tutorialPrefab).GetComponent<TutorialManager>();
+        _tutorialManager.FinishTutorialDelegate = FinishTutorial;
+    }
+    
+    void FinishTutorial()
+    {
+        _tutorialManager.FinishTutorialDelegate = null;
+        Destroy(_tutorialManager.gameObject);
+        StartGame();
     }
 
     void StartGame()

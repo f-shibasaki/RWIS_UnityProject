@@ -576,6 +576,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gamePrefab: {fileID: 2590135482439424229, guid: 6b4d7cb242d884847bb1844ecaffa54d,
     type: 3}
+  _tutorialPrefab: {fileID: 8693868357174822370, guid: 2d6fbd3f8073949f6a770aeb95d9eab4,
+    type: 3}
   _uiController: {fileID: 450535122992752966}
 --- !u!4 &1650225804
 Transform:
