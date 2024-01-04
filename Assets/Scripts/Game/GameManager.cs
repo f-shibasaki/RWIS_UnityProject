@@ -86,6 +86,9 @@ public class GameManager : MonoBehaviour
         {
             activeBlock = upcomingBlocks.Dequeue();
         }
+        
+        // 画面をスリープしない設定
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     // Update is called once per frame
@@ -294,6 +297,9 @@ public class GameManager : MonoBehaviour
     // ゲームオーバー処理の実行
     void GameOver()
     {
+        // 画面スリープを有効化
+        Screen.sleepTimeout = SleepTimeout.SystemSetting;
+
         activeBlock.MoveUp();
 
         gameOver = true;
