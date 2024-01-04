@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(EffectsManager))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     
     [SerializeField]
     Board board;
+    
+    EffectsManager effectsManager;
     
     Block activeBlock; // 落ちてくるブロック
     
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
 
         spawner = GameObject.FindObjectOfType<Spawner>();
         board = GameObject.FindObjectOfType<Board>();
+        effectsManager = GetComponent<EffectsManager>();
 
         spawner.transform.position = Rounding.Round(spawner.transform.position);
 
@@ -235,7 +239,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void BlockAtBottom()
+    async void BlockAtBottom()
     {
         activeBlock.MoveUp();
         board.SaveBlockPosition(activeBlock);
@@ -256,6 +260,8 @@ public class GameManager : MonoBehaviour
         nextKeyShiftTimer = Time.time;
         nextKeyRotateTimer = Time.time;
 
+        List<int> filledRows = board.CheckFilledRows();
+        await effectsManager.PlayLineClearEffect(filledRows);
         board.ClearFilledRows();
     }
 

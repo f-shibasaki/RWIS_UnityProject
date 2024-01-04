@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -11,6 +10,8 @@ public class Board : MonoBehaviour
 
     [SerializeField] // ボードの高さ，幅，高さ調整
     private int height = 30, width = 10, header = 8;
+
+    private List<int> filledRows = new List<int>();
 
     private void Awake()
     {
@@ -85,19 +86,35 @@ public class Board : MonoBehaviour
             grid[(int)pos.x, (int)pos.y] = item;
         }
     }
-
-    // 埋まった行を全て削除
-    public void ClearFilledRows()
+    
+    public List<int> CheckFilledRows()
     {
+        // 消去待ち配列
+        filledRows = new List<int>();
+        
         for (int y = 0; y < height; y++)
         {
             if (IsFilledRow(y))
             {
                 ClearRow(y);
-                DropRows(y);
-                y--;
+                filledRows.Add(y);
             }
         }
+
+        return filledRows;
+    }
+
+    // 埋まった行を全て削除
+    public void ClearFilledRows()
+    {
+        // 消去待ち配列を降順にソート
+        filledRows.Sort((a, b) => b - a);
+        // 消去待ち配列の行を削除
+        foreach (int y in filledRows)
+        {
+            DropRows(y);
+        }
+        filledRows.Clear();
     }
 
     // 行が埋まっているか確認
