@@ -539,6 +539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9408e58d6182f47b5893862cae200cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPosition: {x: 5.8, y: 12, z: 0}
+  speed: 0.1
+  minAngle: -15
+  maxAngle: 15
 --- !u!1 &988129973
 GameObject:
   m_ObjectHideFlags: 0
