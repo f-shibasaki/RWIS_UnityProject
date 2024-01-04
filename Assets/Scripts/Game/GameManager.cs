@@ -322,6 +322,7 @@ public class GameManager : MonoBehaviour
     public void ResetGyro()
     {
         initPose = new Quaternion(-inputGyro.x, -inputGyro.y, inputGyro.z, inputGyro.w);
+        Camera.main.GetComponent<MoveWithGyro>().ResetGyro();
     }
     
 
