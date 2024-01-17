@@ -180,10 +180,13 @@ public class GameManager : MonoBehaviour
 
     public bool Drop()
     {
+        // swipe 操作があったら
         if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
             // || (angles.x > 270) && (angles.x < 300) && (Time.time > nextKeyDropTimer)
-           )
+           || (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Moved)
+            )
         {
+            Input.touches[0].phase = TouchPhase.Canceled;
             activeBlock.MoveDown();
             nextKeyDropTimer = Time.time + nextKeyDropInterval;
             nextDropTimer = Time.time + dropInterval;
@@ -233,8 +236,11 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        // ホールド
-        if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H))
+
+        // ホールド ：画面タッチ(指が動いていない)
+        if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
+             || (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
+            )
         {
             HoldBlock();
 
