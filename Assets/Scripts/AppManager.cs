@@ -13,7 +13,7 @@ public class AppManager : MonoBehaviour
 
     private GameManager _gameManager;
     private TutorialManager _tutorialManager;
-    
+
     void Start()
     {
         _uiController.StartGameDelegate = StartGame;
@@ -48,6 +48,7 @@ public class AppManager : MonoBehaviour
         }
         SetGame();
         _gameManager.Resume();
+        SoundManager.instance.PlayBGM();
     }
 
     void SetGame()
@@ -59,11 +60,13 @@ public class AppManager : MonoBehaviour
     void PauseGame()
     {
         _gameManager.Pause();
+        SoundManager.instance.PauseBGM();
     }
     
     void ResumeGame()
     {
         _gameManager.Resume();
+        SoundManager.instance.PlayBGM();
     }
     
     void ResetGyro()
@@ -75,5 +78,6 @@ public class AppManager : MonoBehaviour
     {
         _gameManager.Pause();
         _uiController.OnGameOver();
+        SoundManager.instance.StopBGM();
     }
 }
