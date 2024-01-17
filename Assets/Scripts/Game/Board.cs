@@ -85,6 +85,7 @@ public class Board : MonoBehaviour
 
             grid[(int)pos.x, (int)pos.y] = item;
         }
+        SoundManager.instance.PlaySE("atBottom");
     }
     
     public List<int> CheckFilledRows()
@@ -100,7 +101,6 @@ public class Board : MonoBehaviour
                 filledRows.Add(y);
             }
         }
-
         return filledRows;
     }
 
@@ -127,6 +127,7 @@ public class Board : MonoBehaviour
                 return false;
             }
         }
+        SoundManager.instance.PlaySE("filledRows");
 
         return true;
     }
