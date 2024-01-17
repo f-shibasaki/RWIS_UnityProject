@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
     public Action StartTutorialDelegate { get; set; }
     public Action PauseGameDelegate { get; set; }
     public Action ResumeGameDelegate { get; set; }
+    public Action QuitGameDelegate { get; set; }
     public Action ResetGyroDelegate { get; set; }
 
     void Awake()
@@ -69,6 +70,7 @@ public class UIController : MonoBehaviour
     public void OnReturnHome()
     {
         DisableAllPanels();
+        QuitGameDelegate.Invoke();
         _homePanel.gameObject.SetActive(true);
     }
 
