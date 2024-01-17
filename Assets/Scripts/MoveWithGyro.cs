@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MoveWithGyro : MonoBehaviour
 {
-    // ジャイロセンサーに応じて、targetポジションに対してy軸方向に弧を描くようにカメラが動く
-    
     [SerializeField] private Vector3 targetPosition;
     [SerializeField] private float speed = 1f;
 
