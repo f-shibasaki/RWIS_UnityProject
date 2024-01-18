@@ -95,14 +95,19 @@ public class Board : MonoBehaviour
     {
         // 消去待ち配列
         filledRows = new List<int>();
-        
+
+        int lineNum = 0;
+
         for (int y = 0; y < height; y++)
         {
             if (IsFilledRow(y))
             {
                 ClearRow(y);
                 filledRows.Add(y);
-                score.AddScoreForClearLine();
+                // 複数(lineNum)ライン消すと高得点
+                lineNum += 1;
+                score.AddScoreForClearLine(lineNum);
+                UnityEngine.Debug.Log("lineNum" + lineNum);
             }
         }
         return filledRows;

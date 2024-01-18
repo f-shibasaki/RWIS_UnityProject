@@ -7,6 +7,8 @@ public class Score : MonoBehaviour
 {
     private Text _scoreText;
     private int score = 0;
+    private int basicScore = 100;
+    private int bonusScore = 50;
 
 
     public void GameStart()
@@ -16,9 +18,19 @@ public class Score : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void AddScoreForClearLine()
+    public void AddScoreForClearLine(int lineNumber)
     {
-        score += 1000;
+        score += basicScore;
+
+        // •¡”ƒ‰ƒCƒ“Á‚³‚ê‚½ê‡
+        if(lineNumber > 1 && lineNumber < 5)
+        {
+            score += bonusScore;
+        }else if(lineNumber >= 5)
+        {
+            score += bonusScore * 2;
+        }
+
         _scoreText.text = score.ToString("N0");
     }
 }
