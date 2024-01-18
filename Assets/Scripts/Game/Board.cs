@@ -13,9 +13,12 @@ public class Board : MonoBehaviour
 
     private List<int> filledRows = new List<int>();
 
+    private Score score;
+
     private void Awake()
     {
         grid = new Transform[width, height];
+        score = GameObject.FindObjectOfType<Score>();
     }
 
     // Start is called before the first frame update
@@ -99,6 +102,7 @@ public class Board : MonoBehaviour
             {
                 ClearRow(y);
                 filledRows.Add(y);
+                score.AddScoreForClearLine();
             }
         }
         return filledRows;

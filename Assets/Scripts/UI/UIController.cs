@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class UIController : MonoBehaviour
     
     [SerializeField]
     private GameOverPanel _gameOverPanel;
-    
+
     // [SerializeField]
     // private GameObject _tutorialPanel;
+
+    private Score score;
 
     public Action StartGameDelegate { get; set; }
     public Action StartTutorialDelegate { get; set; }
@@ -44,6 +47,7 @@ public class UIController : MonoBehaviour
         
         DisableAllPanels();
         _homePanel.gameObject.SetActive(true);
+
     }
 
     public void OnStartGame()
@@ -53,6 +57,10 @@ public class UIController : MonoBehaviour
         StartGameDelegate.Invoke();
         
         _gamePanel.gameObject.SetActive(true);
+
+        // ÉXÉRÉAÇÃèâä˙âª
+        score = GameObject.FindObjectOfType<Score>();
+        score.GameStart();
     }
     
     public void OnGameOver()
