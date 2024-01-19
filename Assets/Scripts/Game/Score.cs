@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     private Text _scoreText;
+    private Text _resultScoreText;
     private int score = 0;
     private int basicScore = 100;
     private int bonusScore = 50;
@@ -13,7 +14,7 @@ public class Score : MonoBehaviour
 
     public void GameStart()
     {
-        this._scoreText = GameObject.Find("ScoreText").GetComponent<Text>(); // textコンポーネントを取得
+        this._scoreText = GameObject.Find("ScoreText").GetComponent<Text>(); 
         _scoreText.text = score.ToString("N0");
     }
 
@@ -32,5 +33,11 @@ public class Score : MonoBehaviour
         }
 
         _scoreText.text = score.ToString("N0");
+    }
+
+    public void ResultScore()
+    {
+        this._resultScoreText = GameObject.Find("ResultScoreText").GetComponent<Text>();
+        _resultScoreText.text = score.ToString("N0");
     }
 }

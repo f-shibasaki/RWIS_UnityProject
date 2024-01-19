@@ -48,6 +48,8 @@ public class UIController : MonoBehaviour
         DisableAllPanels();
         _homePanel.gameObject.SetActive(true);
 
+        score = GameObject.FindObjectOfType<Score>(true);
+
     }
 
     public void OnStartGame()
@@ -58,8 +60,6 @@ public class UIController : MonoBehaviour
         
         _gamePanel.gameObject.SetActive(true);
 
-        // ÉXÉRÉAÇÃèâä˙âª
-        score = GameObject.FindObjectOfType<Score>();
         score.GameStart();
     }
     
@@ -67,6 +67,8 @@ public class UIController : MonoBehaviour
     {
         _gamePanel.gameObject.SetActive(false);
         _gameOverPanel.gameObject.SetActive(true);
+
+        score.ResultScore();
     }
     
     public void OnStartTutorial()

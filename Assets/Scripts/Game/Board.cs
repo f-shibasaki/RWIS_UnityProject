@@ -107,7 +107,6 @@ public class Board : MonoBehaviour
                 // 複数(lineNum)ライン消すと高得点
                 lineNum += 1;
                 score.AddScoreForClearLine(lineNum);
-                UnityEngine.Debug.Log("lineNum" + lineNum);
             }
         }
         return filledRows;
