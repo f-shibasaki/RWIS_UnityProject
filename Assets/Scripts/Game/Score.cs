@@ -11,10 +11,15 @@ public class Score : MonoBehaviour
     private int basicScore = 100;
     private int bonusScore = 50;
 
+    public void Awake()
+    {
+        GameObject _UI = GameObject.Find("UI");
+        _scoreText = _UI.transform.Find("GamePanel/ScoreText").gameObject.GetComponent<Text>();
+        _resultScoreText = _UI.transform.Find("GameOverPanel/ResultScoreText").gameObject.GetComponent<Text>();
+    }
 
     public void GameStart()
     {
-        this._scoreText = GameObject.Find("ScoreText").GetComponent<Text>(); 
         _scoreText.text = score.ToString("N0");
     }
 
@@ -31,13 +36,11 @@ public class Score : MonoBehaviour
         {
             score += bonusScore * 2;
         }
-
         _scoreText.text = score.ToString("N0");
     }
 
     public void ResultScore()
     {
-        this._resultScoreText = GameObject.Find("ResultScoreText").GetComponent<Text>();
         _resultScoreText.text = score.ToString("N0");
     }
 }

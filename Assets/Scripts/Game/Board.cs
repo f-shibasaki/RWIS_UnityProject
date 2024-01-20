@@ -18,7 +18,7 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         grid = new Transform[width, height];
-        score = GameObject.FindObjectOfType<Score>();
+        score = GameObject.FindObjectOfType<Score>(true);
     }
 
     // Start is called before the first frame update
