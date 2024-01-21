@@ -13,9 +13,12 @@ public class Board : MonoBehaviour
 
     private List<int> filledRows = new List<int>();
 
+    private Score score;
+
     private void Awake()
     {
         grid = new Transform[width, height];
+        score = GameObject.FindObjectOfType<Score>(true);
     }
 
     // Start is called before the first frame update
@@ -92,13 +95,18 @@ public class Board : MonoBehaviour
     {
         // 消去待ち配列
         filledRows = new List<int>();
-        
+
+        int lineNum = 0;
+
         for (int y = 0; y < height; y++)
         {
             if (IsFilledRow(y))
             {
                 ClearRow(y);
                 filledRows.Add(y);
+                // 複数(lineNum)ライン消すと高得点
+                lineNum += 1;
+                score.AddScoreForClearLine(lineNum);
             }
         }
         return filledRows;

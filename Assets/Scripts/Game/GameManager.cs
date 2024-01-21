@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField]
     Board board;
-    
+
     EffectsManager effectsManager;
     
     Block activeBlock; // 落ちてくるブロック
