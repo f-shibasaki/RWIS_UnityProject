@@ -29,10 +29,10 @@ public class Score : MonoBehaviour
         score += basicScore;
 
         // •¡”ƒ‰ƒCƒ“Á‚³‚ê‚½ê‡
-        if(lineNumber > 1 && lineNumber < 5)
+        if(lineNumber > 1 && lineNumber < 4)
         {
             score += bonusScore;
-        }else if(lineNumber >= 5)
+        }else if(lineNumber == 4)
         {
             score += bonusScore * 2;
         }
