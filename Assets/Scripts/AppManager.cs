@@ -50,6 +50,7 @@ public class AppManager : MonoBehaviour
         }
         SetGame();
         _gameManager.Resume();
+        SoundManager.instance.StopBGM();
         SoundManager.instance.PlayBGM();
     }
 
