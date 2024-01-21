@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField]
     Board board;
-    
+
     EffectsManager effectsManager;
     
     Block activeBlock; // 落ちてくるブロック
@@ -164,6 +164,7 @@ public class GameManager : MonoBehaviour
             // || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (prevAcceleration.x < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer)
             || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
         {
+            SoundManager.instance.PlaySE("rotationSE");
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
