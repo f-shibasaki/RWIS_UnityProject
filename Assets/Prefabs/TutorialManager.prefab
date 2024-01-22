@@ -165,13 +165,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 4880933279801056281}
   board: {fileID: 4539639133634966656}
+  shadowMaterial: {fileID: 2100000, guid: 67987fda0cc6ebd4493cf8714614cf4f, type: 2}
   dropInterval: 0.5
   nextKeyDropInterval: 0.02
   nextKeyShiftInterval: 0.25
   nextKeyRotateInterval: 0.5
   nextShakeInterval: 0.2
   shakeThreshold: 2
-  androidBuild: 1
 --- !u!114 &1804270964604748502
 MonoBehaviour:
   m_ObjectHideFlags: 0
