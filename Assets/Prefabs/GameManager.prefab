@@ -110,6 +110,7 @@ MonoBehaviour:
   nextKeyRotateInterval: 0.5
   nextShakeInterval: 0.2
   shakeThreshold: 2
+  androidBuild: 1
 --- !u!114 &3709470659675165013
 MonoBehaviour:
   m_ObjectHideFlags: 0
