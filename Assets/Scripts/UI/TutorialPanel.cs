@@ -2,13 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RotationTutorialPanel : MonoBehaviour
+public class TutorialPanel : MonoBehaviour
 {
     [SerializeField]
     private Button _finishButton;
     
-
-    // クリックした時に実行する関数
     public Action OnFinish { get; set; }
 
     void OnEnable()

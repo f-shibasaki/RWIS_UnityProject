@@ -22,6 +22,8 @@ public class TutorialManager : MonoBehaviour
         Instantiate(_tutorialUIPrefab, transform);
         _tutorialUIController = GetComponentInChildren<TutorialUIController>();
         _tutorialUIController.FinishHorizontalTutorialDelegate = RotateTutorial;
+        _tutorialUIController.FinishRotationTutorialDelegate = HoldTutorial;
+        _tutorialUIController.FinishHoldTutorialDelegate = SwipeTutorial;
         _tutorialUIController.FinishTutorialDelegate = FinishTutorial;
         
         // チュートリアル開始
@@ -40,6 +42,17 @@ public class TutorialManager : MonoBehaviour
     {
         _gameManager.ResetGyro();
         _gameManager.EnableRotation();
+    }
+    
+    void HoldTutorial()
+    {
+        _gameManager.EnableHold();
+    }
+    
+    void SwipeTutorial()
+    {
+        _gameManager.EnableDrop();
+        _gameManager.EnableSwipe();
     }
     
     void FinishTutorial()
