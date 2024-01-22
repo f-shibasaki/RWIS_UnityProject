@@ -50,6 +50,15 @@ public class GameManager : MonoBehaviour
     bool isRotationEnabled = true;
     bool isDropEnabled = true;
 
+
+    // swipe
+    private Vector2 fingerDown;
+    private Vector2 fingerUp;
+    private float SWIPE_THRESHOLD = 50.0f; // しきい値以上スワイプするとスワイプとして検知
+    private bool InputSwipe = false;       // swipe入力検知
+    private bool InputTouch = false;       // touch入力検知
+    public bool androidBuild = false;
+
     public Action OnGameOverDelegate { get; set; }
 
     // Start is called before the first frame update
@@ -184,10 +193,10 @@ public class GameManager : MonoBehaviour
         // swipe 操作があったら
         if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
             // || (angles.x > 270) && (angles.x < 300) && (Time.time > nextKeyDropTimer)
-           || (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Moved)
+            || (InputSwipe && (Time.time > nextKeyShiftTimer))
+            //(Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Moved)
             )
         {
-            Input.touches[0].phase = TouchPhase.Canceled;
             activeBlock.MoveDown();
             nextKeyDropTimer = Time.time + nextKeyDropInterval;
             nextDropTimer = Time.time + dropInterval;
@@ -213,6 +222,11 @@ public class GameManager : MonoBehaviour
     // 入力を検知してブロックを移動
     void PlayerInput ()
     {
+        if (androidBuild)
+        {
+            InputFingerCheck();
+        }
+
         if (isHorizontalMoveEnabled && MoveInput())
         {
             return;
@@ -240,7 +254,7 @@ public class GameManager : MonoBehaviour
 
         // ホールド ：画面タッチ(指が動いていない)
         if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
-             || (Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
+             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer) || (InputTouch && (Time.time > nextKeyShiftTimer))  //(Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
             )
         {
             HoldBlock();
@@ -298,6 +312,40 @@ public class GameManager : MonoBehaviour
 
             activeBlock = upcomingBlocks.Dequeue();
             activeBlock.transform.position = currentPosition;
+        }
+    }
+
+    // スワイプ検知
+    void InputFingerCheck()
+    {
+        if (Input.touches[0].phase == TouchPhase.Began)
+        {
+            InputTouch = false;
+            InputSwipe = false;
+            fingerUp = Input.touches[0].position;
+            fingerDown = Input.touches[0].position;
+        }
+
+        if (Input.touches[0].phase == TouchPhase.Moved)
+        {
+            fingerUp = Input.touches[0].position;
+            if (Mathf.Abs(fingerDown.y - fingerUp.y) > SWIPE_THRESHOLD)
+            {
+                InputSwipe = true;
+            }
+        }
+
+        if (Input.touches[0].phase == TouchPhase.Ended)
+        {
+            fingerUp = Input.touches[0].position;
+            if (Mathf.Abs(fingerDown.y - fingerUp.y) < SWIPE_THRESHOLD)
+            {
+                InputTouch = true; //InputSwipe = false;
+            }
+            else
+            {
+                InputSwipe = true; //InputTouch = false;
+            }
         }
     }
 
