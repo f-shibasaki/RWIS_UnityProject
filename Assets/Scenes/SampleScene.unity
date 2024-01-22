@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.09122873, g: 0.15097418, b: 0.24573708, a: 1}
+  m_IndirectSpecularColor: {r: 0.091372855, g: 0.1509262, b: 0.2457366, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -900,6 +900,8 @@ MonoBehaviour:
   _tutorialPrefab: {fileID: 8693868357174822370, guid: 2d6fbd3f8073949f6a770aeb95d9eab4,
     type: 3}
   _uiController: {fileID: 450535122992752966}
+  _floatingBlocksPrefab: {fileID: 4548793254937103688, guid: 002368e99f016bb4fb3d7e268860ca2b,
+    type: 3}
 --- !u!4 &1650225804
 Transform:
   m_ObjectHideFlags: 0

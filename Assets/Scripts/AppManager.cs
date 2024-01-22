@@ -10,9 +10,13 @@ public class AppManager : MonoBehaviour
     
     [SerializeField]
     UIController _uiController;
+    
+    [SerializeField]
+    GameObject _floatingBlocksPrefab;
 
     private GameManager _gameManager;
     private TutorialManager _tutorialManager;
+    private GameObject _floatingBlocks;
 
     void Start()
     {
@@ -22,10 +26,14 @@ public class AppManager : MonoBehaviour
         _uiController.ResumeGameDelegate = ResumeGame;
         _uiController.QuitGameDelegate = QuitGame;
         _uiController.ResetGyroDelegate = ResetGyro;
+        
+        _floatingBlocks = Instantiate(_floatingBlocksPrefab);
     }
     
     void StartTutorial()
     {
+        Destroy(_floatingBlocks);
+        
         if (_tutorialManager != null)
         {
             Destroy(_tutorialManager.gameObject);
@@ -44,6 +52,8 @@ public class AppManager : MonoBehaviour
 
     void StartGame()
     {
+        Destroy(_floatingBlocks);
+
         if (_gameManager != null)
         {
             Destroy(_gameManager.gameObject);
@@ -78,6 +88,8 @@ public class AppManager : MonoBehaviour
         {
             Destroy(_gameManager.gameObject);
         }
+
+        _floatingBlocks = Instantiate(_floatingBlocksPrefab);
     }
     
     void ResetGyro()
