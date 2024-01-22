@@ -254,7 +254,10 @@ public class GameManager : MonoBehaviour
 
         // ホールド ：画面タッチ(指が動いていない)
         if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
-             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer) || (InputTouch && (Time.time > nextKeyShiftTimer))  //(Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Ended)
+#if UNITY_EDITOR
+             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer) 
+#endif
+             || (InputTouch && (Time.time > nextKeyShiftTimer))
             )
         {
             HoldBlock();
@@ -324,8 +327,15 @@ public class GameManager : MonoBehaviour
     }
 
     // スワイプ検知
-    void InputFingerCheck()
+    void InputFingerCheck() 
     {
+        if (Input.touches.Length <= 0)
+        {
+            InputTouch = false;
+            InputSwipe = false;
+            return;
+        }
+    
         if (Input.touches[0].phase == TouchPhase.Began)
         {
             InputTouch = false;
@@ -348,11 +358,13 @@ public class GameManager : MonoBehaviour
             fingerUp = Input.touches[0].position;
             if (Mathf.Abs(fingerDown.y - fingerUp.y) < SWIPE_THRESHOLD)
             {
-                InputTouch = true; //InputSwipe = false;
+                InputTouch = true;
+                InputSwipe = false;
             }
             else
             {
-                InputSwipe = true; //InputTouch = false;
+                InputSwipe = true; 
+                InputTouch = false;
             }
         }
     }
