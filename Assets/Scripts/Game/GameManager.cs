@@ -127,7 +127,8 @@ public class GameManager : MonoBehaviour
             activeBlock.MoveRight();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
 
-            if (!board.CheckPosition(activeBlock))
+            if (board.CheckPosition(activeBlock) == BlockValidation.RightOver
+                || board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
                 activeBlock.MoveLeft();
                 return true;
@@ -140,7 +141,8 @@ public class GameManager : MonoBehaviour
             activeBlock.MoveLeft();
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
 
-            if (!board.CheckPosition(activeBlock))
+            if (board.CheckPosition(activeBlock) == BlockValidation.LeftOver
+                || board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
                 activeBlock.MoveRight();
                 return true;
@@ -161,7 +163,7 @@ public class GameManager : MonoBehaviour
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
 
-            if (!board.CheckPosition(activeBlock))
+            if (board.CheckPosition(activeBlock) != BlockValidation.Success)
             {
                 activeBlock.RotateLeft();
                 return true;
@@ -177,12 +179,13 @@ public class GameManager : MonoBehaviour
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
-            
-            if (!board.CheckPosition(activeBlock))
+
+            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
-                activeBlock.RotateRight();
-                return true;
+                activeBlock.RotateLeft();
             }
+            MoveOnBoard(board.CheckPosition(activeBlock));
+            return true;
         }
 
         return false;
@@ -201,7 +204,8 @@ public class GameManager : MonoBehaviour
             nextKeyDropTimer = Time.time + nextKeyDropInterval;
             nextDropTimer = Time.time + dropInterval;
 
-            if (!board.CheckPosition(activeBlock))
+            if (board.CheckPosition(activeBlock) == BlockValidation.BottomOver
+                || board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
                 if (board.IsOverflowed(activeBlock))
                 {
@@ -241,7 +245,7 @@ public class GameManager : MonoBehaviour
             activeBlock.RotateUp();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
 
-            if (!board.CheckPosition(activeBlock))
+            if (board.CheckPosition(activeBlock) != BlockValidation.Success)
             {
                 activeBlock.RotateUp();
             }
@@ -253,13 +257,15 @@ public class GameManager : MonoBehaviour
         }
 
         // ホールド ：画面タッチ(指が動いていない)
-        if (Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
+        if (
 #if UNITY_EDITOR
-             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer) 
+            Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
+             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer)
 #endif
              || (InputTouch && (Time.time > nextKeyShiftTimer))
             )
         {
+            
             HoldBlock();
 
             nextKeyShiftTimer = Time.time + nextKeyShiftInterval;
@@ -296,6 +302,22 @@ public class GameManager : MonoBehaviour
         board.ClearFilledRows();
     }
 
+    public void MoveOnBoard(BlockValidation blockValidation)
+    {
+        if (blockValidation == BlockValidation.RightOver)
+        {
+            activeBlock.MoveLeft();
+        }
+        else if (blockValidation == BlockValidation.LeftOver)
+        {
+            activeBlock.MoveRight();
+        }
+        else if (blockValidation == BlockValidation.BottomOver)
+        {
+            activeBlock.MoveUp();
+        }
+    }
+
     void HoldBlock()
     {
         if (holdBlock)
@@ -324,6 +346,8 @@ public class GameManager : MonoBehaviour
             }
             activeBlock.transform.position = currentPosition;
         }
+
+        MoveOnBoard(board.CheckPosition(activeBlock));
     }
 
     // スワイプ検知

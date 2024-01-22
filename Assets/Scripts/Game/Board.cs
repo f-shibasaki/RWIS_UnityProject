@@ -45,38 +45,62 @@ public class Board : MonoBehaviour
     }
 
     // ブロックが範囲内に存在するか判定
-    public bool CheckPosition(Block block)
+    public BlockValidation CheckPosition(Block block)
     {
         foreach (Transform item in block.transform)
         {
             Vector2 pos = Rounding.Round(item.position);
 
             // 左右と下が範囲外のとき
-            if (!IsOnBoard((int)pos.x, (int)pos.y))
+            BlockValidation blockValidation = IsOnBoard((int)pos.x, (int)pos.y);
+            if(blockValidation != BlockValidation.Success)
             {
-                return false;
+                return blockValidation;
             }
 
             // ブロックが既に存在しているとき
-            if (IsOccupied((int)pos.x, (int)pos.y, block))
+            blockValidation = IsOccupied((int)pos.x, (int)pos.y, block);
+            if(blockValidation != BlockValidation.Success)
             {
-                return false;
+                return blockValidation;
             }
         }
 
-        return true;
+        return BlockValidation.Success;
     }
 
-    bool IsOnBoard (int x, int y)
+    BlockValidation IsOnBoard (int x, int y)
     {
         // 左右と下が範囲内
-        return (x >= 0 && x < width && y >= 0);
+        if (x >= 0 && x < width && y >= 0)
+        {
+            return BlockValidation.Success;
+        }
+        else if(x < 0)
+        {
+            return BlockValidation.LeftOver;
+        }
+        else if (x >= width)
+        {
+            return BlockValidation.RightOver;
+        }
+        else
+        {
+            return BlockValidation.BottomOver;
+        }
     }
 
-    bool IsOccupied (int x, int y, Block block)
+    BlockValidation IsOccupied (int x, int y, Block block)
     {
         // grid[x, y]に親が違うブロックが存在
-        return (grid[x, y] != null && grid[x, y].parent != block.transform);
+        if (grid[x, y] != null && grid[x, y].parent != block.transform)
+        {
+            return BlockValidation.Occupied;
+        }
+        else
+        {
+            return BlockValidation.Success;
+        }
     }
 
     // 停止したブロックの位置を記録
