@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     bool pause = true;
     bool isHorizontalMoveEnabled = true;
     bool isRotationEnabled = true;
+    bool isHoldEnabled = true;
+    bool isSwipeEnabled = true;
     bool isDropEnabled = true;
 
 
@@ -57,7 +59,6 @@ public class GameManager : MonoBehaviour
     private float SWIPE_THRESHOLD = 50.0f; // しきい値以上スワイプするとスワイプとして検知
     private bool InputSwipe = false;       // swipe入力検知
     private bool InputTouch = false;       // touch入力検知
-    public bool androidBuild = false;
 
     public Action OnGameOverDelegate { get; set; }
 
@@ -199,9 +200,7 @@ public class GameManager : MonoBehaviour
     {
         // swipe 操作があったら
         if (Input.GetKey(KeyCode.S) && (Time.time > nextKeyDropTimer) || (Time.time > nextDropTimer)
-            // || (angles.x > 270) && (angles.x < 300) && (Time.time > nextKeyDropTimer)
-            || (InputSwipe && (Time.time > nextKeyShiftTimer))
-            //(Input.touchCount == 1 && Input.touches[0].phase == TouchPhase.Moved)
+            || (isSwipeEnabled && InputSwipe && (Time.time > nextKeyShiftTimer))
             )
         {
             activeBlock.MoveDown();
@@ -230,10 +229,7 @@ public class GameManager : MonoBehaviour
     // 入力を検知してブロックを移動
     void PlayerInput ()
     {
-        if (androidBuild)
-        {
-            InputFingerCheck();
-        }
+        InputFingerCheck();
 
         if (isHorizontalMoveEnabled && MoveInput())
         {
@@ -263,10 +259,10 @@ public class GameManager : MonoBehaviour
         // ホールド ：画面タッチ(指が動いていない)
         if (
 #if UNITY_EDITOR
-            Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.H)
-             || Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer)
+            isHoldEnabled && Input.GetKey(KeyCode.H) && (Time.time > nextKeyShiftTimer) || isHoldEnabled && Input.GetKeyDown(KeyCode.H)
+             || isHoldEnabled && Input.GetMouseButton(0) && (Time.time > nextKeyShiftTimer) ||
 #endif
-             || (InputTouch && (Time.time > nextKeyShiftTimer))
+             (isHoldEnabled && InputTouch && (Time.time > nextKeyShiftTimer))
             )
         {
             
@@ -438,12 +434,30 @@ public class GameManager : MonoBehaviour
     {
         isRotationEnabled = true;
     }
+    
+    public void EnableHold()
+    {
+        isHoldEnabled = true;
+    }
+
+    public void EnableDrop()
+    {
+        isDropEnabled = true;
+    }
+    
+    public void EnableSwipe()
+    {
+        isSwipeEnabled = true;
+    }
+    
     public void PrepareForTutorial()
     {
         activeBlock.transform.position -= new Vector3(0, 10, 0);
 
         isHorizontalMoveEnabled = false;
         isRotationEnabled = false;
+        isHoldEnabled = false;
+        isSwipeEnabled = false;
         isDropEnabled = false;
         
         pause = false;

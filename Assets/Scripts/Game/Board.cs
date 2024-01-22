@@ -130,7 +130,10 @@ public class Board : MonoBehaviour
                 filledRows.Add(y);
                 // 複数(lineNum)ライン消すと高得点
                 lineNum += 1;
-                score.AddScoreForClearLine(lineNum);
+                if (score != null)
+                {
+                    score.AddScoreForClearLine(lineNum);
+                }
             }
         }
         return filledRows;
