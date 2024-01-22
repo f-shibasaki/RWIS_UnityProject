@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     EffectsManager effectsManager;
     
     Block activeBlock; // 落ちてくるブロック
+    Block shadowBlock;
+    [SerializeField]
+    Material shadowMaterial;
     
     Queue<Block> upcomingBlocks = new Queue<Block>(); // 今後のブロック
     Block holdBlock; // ホールドしたブロック
@@ -94,6 +97,12 @@ public class GameManager : MonoBehaviour
         if (!activeBlock)
         {
             activeBlock = upcomingBlocks.Dequeue();
+            shadowBlock = Instantiate(activeBlock, this.transform);
+            foreach (Transform item in shadowBlock.transform)
+            {
+                Renderer render = item.gameObject.GetComponent<Renderer>();
+                render.material = shadowMaterial;
+            }
         }
         
         // 画面をスリープしない設定
@@ -116,6 +125,7 @@ public class GameManager : MonoBehaviour
         acceleration.Set(-Input.acceleration.x, -Input.acceleration.y, Input.acceleration.z);
 
         PlayerInput();
+        SimulateShadowBlock();
     }
 
     public bool MoveInput()
@@ -394,6 +404,26 @@ public class GameManager : MonoBehaviour
                 InputSwipe = true; 
                 InputTouch = false;
             }
+        }
+    }
+
+    void SimulateShadowBlock()
+    {
+        Destroy(shadowBlock.gameObject);
+        shadowBlock = Instantiate(activeBlock, this.transform);
+        foreach (Transform item in shadowBlock.transform)
+        {
+            Renderer render = item.gameObject.GetComponent<Renderer>();
+            render.material = shadowMaterial;
+        }
+        shadowBlock.transform.position = activeBlock.transform.position;
+        if (activeBlock.transform.position.y < 24)
+        {
+            while (board.CheckPosition(shadowBlock) == BlockValidation.Success)
+            {
+                shadowBlock.MoveDown();
+            }
+            shadowBlock.MoveUp();
         }
     }
 
