@@ -278,6 +278,10 @@ public class GameManager : MonoBehaviour
 
         Block b = spawner.SpawnBlock();
         b.transform.position += new Vector3(7, -5 * 4, 0);
+        if (holdBlock)
+        {
+            b.transform.position -= new Vector3(0, -5, 0);
+        }
         upcomingBlocks.Enqueue(b);
 
         nextKeyDropTimer = Time.time;
@@ -297,7 +301,7 @@ public class GameManager : MonoBehaviour
             Vector3 currentPosition = activeBlock.transform.position;
 
             holdBlock = activeBlock;
-            holdBlock.transform.position = new Vector3(-2, 20, -1);
+            holdBlock.transform.position = new Vector3(11, 0, -1);
             holdBlock.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
             activeBlock = tmpBlock;
@@ -307,10 +311,14 @@ public class GameManager : MonoBehaviour
         {
             Vector3 currentPosition = activeBlock.transform.position;
             holdBlock = activeBlock;
-            holdBlock.transform.position = new Vector3(-2, 20, -1);
+            holdBlock.transform.position = new Vector3(11, 0, -1);
             holdBlock.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
             activeBlock = upcomingBlocks.Dequeue();
+            foreach (var block in upcomingBlocks)
+            {
+                block.transform.position -= new Vector3(0, -5, 0);
+            }
             activeBlock.transform.position = currentPosition;
         }
     }
