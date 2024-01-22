@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 5832062379445038905}
   - component: {fileID: 3111925387050166210}
   - component: {fileID: 9183424660110425330}
+  - component: {fileID: 1804270964604748502}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -170,3 +171,18 @@ MonoBehaviour:
   nextKeyRotateInterval: 0.5
   nextShakeInterval: 0.2
   shakeThreshold: 2
+  androidBuild: 1
+--- !u!114 &1804270964604748502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693868357174822370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c647165ffdf34ea580878f3f4e5f8ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineClearEffectPrefab: {fileID: 4924858306027649655, guid: df9849620b627436a8b110a68a287abb,
+    type: 3}
