@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
                 activeBlock.MoveLeft();
                 return true;
             }
+            VibrationMng.Vibrate(30);
         }
         // 左移動
         else if (Input.GetKey(KeyCode.A) && (Time.time > nextKeyShiftTimer) || Input.GetKeyDown(KeyCode.A)
@@ -136,6 +137,7 @@ public class GameManager : MonoBehaviour
                 activeBlock.MoveRight();
                 return true;
             }
+            VibrationMng.Vibrate(30);
         }
         return false;
     }
@@ -165,6 +167,8 @@ public class GameManager : MonoBehaviour
             || (Vector3.Dot(acceleration, prevAcceleration) < 0) && (Input.acceleration.magnitude > shakeThreshold) && (Time.unscaledTime > nextShakeTimer))
         {
             SoundManager.instance.PlaySE("rotationSE");
+            VibrationMng.Vibrate(30);
+
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
