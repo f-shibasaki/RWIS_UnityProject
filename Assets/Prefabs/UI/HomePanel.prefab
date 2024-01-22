@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 2693775481726157179}
   - component: {fileID: 5835862646386726590}
   - component: {fileID: 3028166348914885867}
+  - component: {fileID: 3906444436398795597}
   m_Layer: 5
   m_Name: HomePanel
   m_TagString: Untagged
@@ -200,7 +201,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2693775481726157179
 CanvasRenderer:
@@ -223,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -254,6 +255,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playButton: {fileID: 2639501026677820495}
   _tutorialButton: {fileID: 1595925355479866584}
+--- !u!114 &3906444436398795597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696055045954724650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e71be3eb1769e4a9a26153443aed2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anglePerFrame: 0.01
 --- !u!1 &6756958798819520622
 GameObject:
   m_ObjectHideFlags: 0
