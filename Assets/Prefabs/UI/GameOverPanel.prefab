@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 3735606650611741638}
   - component: {fileID: 7265314627874949318}
   - component: {fileID: 2815286488146139228}
+  - component: {fileID: 6535215324654433368}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -455,6 +456,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _restartButton: {fileID: 4715193204341319878}
   _homeButton: {fileID: 8936199416042764191}
+--- !u!114 &6535215324654433368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744046486761723003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e71be3eb1769e4a9a26153443aed2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anglePerFrame: 0.01
 --- !u!1 &4878825136698911228
 GameObject:
   m_ObjectHideFlags: 0
