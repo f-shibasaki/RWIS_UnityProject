@@ -482,7 +482,7 @@ public class GameManager : MonoBehaviour
     
     public void PrepareForTutorial()
     {
-        activeBlock.transform.position -= new Vector3(0, 10, 0);
+        activeBlock.transform.position = new Vector3(4, 18, 0);
 
         isHorizontalMoveEnabled = false;
         isRotationEnabled = false;

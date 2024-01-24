@@ -32,7 +32,7 @@ public class AppManager : MonoBehaviour
     
     void StartTutorial()
     {
-        Destroy(_floatingBlocks);
+        ExitHome();
         
         if (_tutorialManager != null)
         {
@@ -40,6 +40,7 @@ public class AppManager : MonoBehaviour
         }
         _tutorialManager = Instantiate(_tutorialPrefab).GetComponent<TutorialManager>();
         _tutorialManager.FinishTutorialDelegate = FinishTutorial;
+        _tutorialManager.BackHomeDelegate = QuitTutorial;
     }
     
     void FinishTutorial()
@@ -52,7 +53,7 @@ public class AppManager : MonoBehaviour
 
     void StartGame()
     {
-        Destroy(_floatingBlocks);
+        ExitHome();
 
         if (_gameManager != null)
         {
@@ -90,6 +91,27 @@ public class AppManager : MonoBehaviour
         }
 
         _floatingBlocks = Instantiate(_floatingBlocksPrefab);
+    }
+    
+    void QuitTutorial()
+    {
+        if (_tutorialManager != null)
+        {
+            Destroy(_tutorialManager.gameObject);
+        }
+
+        EnterHome();
+    }
+    
+    void EnterHome()
+    {
+        _floatingBlocks = Instantiate(_floatingBlocksPrefab);
+        _uiController.OnEnterHome();
+    }
+    
+    void ExitHome()
+    {
+        Destroy(_floatingBlocks);
     }
     
     void ResetGyro()

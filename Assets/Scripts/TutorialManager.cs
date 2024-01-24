@@ -11,12 +11,11 @@ public class TutorialManager : MonoBehaviour
     private TutorialUIController _tutorialUIController;
     
     public Action FinishTutorialDelegate { get; set; }
+    public Action BackHomeDelegate { get; set; }
 
     void Start()
     {
         _gameManager = GetComponent<GameManager>();
-        
-        _gameManager.PrepareForTutorial();
         
         // 自分の子オブジェクトにUIを生成
         Instantiate(_tutorialUIPrefab, transform);
@@ -25,7 +24,11 @@ public class TutorialManager : MonoBehaviour
         _tutorialUIController.FinishRotationTutorialDelegate = HoldTutorial;
         _tutorialUIController.FinishHoldTutorialDelegate = SwipeTutorial;
         _tutorialUIController.FinishTutorialDelegate = FinishTutorial;
-        
+        _tutorialUIController.BackToHorizontalTutorialDelegate = MoveTutorial;
+        _tutorialUIController.BackToRotationTutorialDelegate = RotateTutorial;
+        _tutorialUIController.BackToHoldTutorialDelegate = HoldTutorial;
+        _tutorialUIController.BackHomeDelegate = BackHome;
+
         // チュートリアル開始
         MoveTutorial();
         _tutorialUIController.OnStartTutorial();
@@ -34,18 +37,27 @@ public class TutorialManager : MonoBehaviour
 
     void MoveTutorial()
     {
+        _gameManager.PrepareForTutorial();
+
         Invoke("ResetGyro", 1f);
         _gameManager.EnableHorizontalMove();
     }
     
     void RotateTutorial()
     {
+        _gameManager.PrepareForTutorial();
+        
+        _gameManager.EnableHorizontalMove();
         _gameManager.ResetGyro();
         _gameManager.EnableRotation();
     }
     
     void HoldTutorial()
     {
+        _gameManager.PrepareForTutorial();
+
+        _gameManager.EnableHorizontalMove();
+        _gameManager.EnableRotation();
         _gameManager.EnableHold();
     }
     
@@ -58,6 +70,11 @@ public class TutorialManager : MonoBehaviour
     void FinishTutorial()
     {
         FinishTutorialDelegate.Invoke();
+    }
+    
+    void BackHome()
+    {
+        BackHomeDelegate.Invoke();
     }
     
     void ResetGyro()

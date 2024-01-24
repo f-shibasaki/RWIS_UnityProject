@@ -80,8 +80,13 @@ public class UIController : MonoBehaviour
     
     public void OnReturnHome()
     {
-        DisableAllPanels();
         QuitGameDelegate.Invoke();
+        OnEnterHome();
+    }
+    
+    public void OnEnterHome()
+    {
+        DisableAllPanels();
         _homePanel.gameObject.SetActive(true);
     }
 
