@@ -49,10 +49,11 @@ public class Board : MonoBehaviour
     {
         foreach (Transform item in block.transform)
         {
+            BlockValidation blockValidation;
             Vector2 pos = Rounding.Round(item.position);
 
             // 左右と下が範囲外のとき
-            BlockValidation blockValidation = IsOnBoard((int)pos.x, (int)pos.y);
+            blockValidation = IsOnBoard((int)pos.x, (int)pos.y);
             if(blockValidation != BlockValidation.Success)
             {
                 return blockValidation;

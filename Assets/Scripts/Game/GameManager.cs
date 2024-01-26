@@ -195,9 +195,9 @@ public class GameManager : MonoBehaviour
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
 
-            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+            if (board.CheckPosition(activeBlock) != BlockValidation.Success)
             {
-                activeBlock.RotateLeft();
+                activeBlock.RotateRight();
             }
             MoveOnBoard(board.CheckPosition(activeBlock));
             return true;
