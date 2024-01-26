@@ -46,7 +46,27 @@ public class Block : MonoBehaviour
     {
         if (canRotate)
         {
-            transform.Rotate(0, 0, 90);
+            if (transform.name == "Block_I(Clone)")
+            {
+                transform.Rotate(0, 0, 90);
+                if (transform.rotation.eulerAngles.z == 0.00f)
+                {
+                    transform.position += new Vector3(-1, 0, 0);
+                } else if (transform.rotation.eulerAngles.z == 90.00f)
+                {
+                    transform.position += new Vector3(0, -1, 0);
+                } else if (transform.rotation.eulerAngles.z == 180.00f)
+                {
+                    transform.position += new Vector3(1, 0, 0);
+                } else if (transform.rotation.eulerAngles.z == 270.00f)
+                {
+                    transform.position += new Vector3(0, 1, 0);
+                }
+            }
+            else
+            {
+                transform.Rotate(0, 0, 90);
+            }
         }
     }
 
