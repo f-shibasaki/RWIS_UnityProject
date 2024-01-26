@@ -421,9 +421,12 @@ public class GameManager : MonoBehaviour
             Renderer render = item.gameObject.GetComponent<Renderer>();
             render.material = shadowMaterial;
         }
-        shadowBlock.transform.position = activeBlock.transform.position;
+        // 最初の数秒間非表示
+        shadowBlock.gameObject.SetActive(false);
         if (activeBlock.transform.position.y < 24)
         {
+            shadowBlock.gameObject.SetActive(true);
+            shadowBlock.transform.position = activeBlock.transform.position;
             while (board.CheckPosition(shadowBlock) == BlockValidation.Success)
             {
                 shadowBlock.MoveDown();
