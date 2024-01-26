@@ -6,6 +6,7 @@ public class BlockFloater : MonoBehaviour
 {
     private Rigidbody rb;
     private Vector3 v = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 acceleration = new Vector3(0.0f, 0.0f, 0.0f);
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,9 @@ public class BlockFloater : MonoBehaviour
         v.y = Random.Range(10.645f, 8.98f);
         v.z = 0.0f;
         rb.AddForce(v, ForceMode.Force);
+
+        acceleration.Set(5f * Input.acceleration.x, 0, 0);
+        rb.AddForce(acceleration, ForceMode.Force);
     }
 
     void Update()
