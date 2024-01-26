@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.20273353, g: 0.028693473, b: 0.24528301, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -409,8 +409,7 @@ MonoBehaviour:
   m_text: next
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -661,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.20392157, g: 0.03137255, b: 0.24705882, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -883,8 +882,7 @@ MonoBehaviour:
   m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1013,7 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.20392157, g: 0.03137255, b: 0.24705882, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1357,8 +1355,7 @@ MonoBehaviour:
   m_text: Next
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1615,8 +1612,7 @@ MonoBehaviour:
   m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1751,8 +1747,7 @@ MonoBehaviour:
   m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1881,7 +1876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.20392157, g: 0.03137255, b: 0.24705882, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2103,8 +2098,7 @@ MonoBehaviour:
   m_text: "Tap to hold \nthe block"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71f5d5af02d45004b845f61afde01358, type: 2}
-  m_sharedMaterial: {fileID: -5470398952880435874, guid: 71f5d5af02d45004b845f61afde01358,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 58893621b7c9f38409c76efec0ce7a4e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2239,8 +2233,7 @@ MonoBehaviour:
   m_text: "((  Shake  )) \nthe device"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71f5d5af02d45004b845f61afde01358, type: 2}
-  m_sharedMaterial: {fileID: -5470398952880435874, guid: 71f5d5af02d45004b845f61afde01358,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 58893621b7c9f38409c76efec0ce7a4e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2375,8 +2368,7 @@ MonoBehaviour:
   m_text: Start Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2511,8 +2503,7 @@ MonoBehaviour:
   m_text: next
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 101a040c655dcce41a7b1c41f12d367c, type: 2}
-  m_sharedMaterial: {fileID: 4191051295508362174, guid: 101a040c655dcce41a7b1c41f12d367c,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 12f7cdb5dbafb984aa5fe2918b3fe222, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2723,8 +2714,7 @@ MonoBehaviour:
   m_text: "\u2193 Swipe down \u2193\nto drop faster"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71f5d5af02d45004b845f61afde01358, type: 2}
-  m_sharedMaterial: {fileID: -5470398952880435874, guid: 71f5d5af02d45004b845f61afde01358,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 58893621b7c9f38409c76efec0ce7a4e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2859,8 +2849,7 @@ MonoBehaviour:
   m_text: "\u2190  Tilt  \u2192\nthe device"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 71f5d5af02d45004b845f61afde01358, type: 2}
-  m_sharedMaterial: {fileID: -5470398952880435874, guid: 71f5d5af02d45004b845f61afde01358,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 58893621b7c9f38409c76efec0ce7a4e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
