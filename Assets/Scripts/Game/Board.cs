@@ -15,6 +15,8 @@ public class Board : MonoBehaviour
 
     private Score score;
 
+    public int overBlockNum{ get; private set; }
+
     private void Awake()
     {
         grid = new Transform[width, height];
@@ -47,26 +49,42 @@ public class Board : MonoBehaviour
     // ブロックが範囲内に存在するか判定
     public BlockValidation CheckPosition(Block block)
     {
+        overBlockNum = 0;
+        BlockValidation statusBlockValidation = BlockValidation.Success;
+        BlockValidation itemBlockValidation = BlockValidation.Success;
         foreach (Transform item in block.transform)
         {
+            // BlockValidation 優先度：Bottom > Occupied > Right/Left Over > Success
+            
             Vector2 pos = Rounding.Round(item.position);
-
             // 左右と下が範囲外のとき
-            BlockValidation blockValidation = IsOnBoard((int)pos.x, (int)pos.y);
-            if(blockValidation != BlockValidation.Success)
+            itemBlockValidation = IsOnBoard((int)pos.x, (int)pos.y);
+            if (itemBlockValidation == BlockValidation.BottomOver)
             {
-                return blockValidation;
+                statusBlockValidation = itemBlockValidation;
+                return statusBlockValidation;
             }
 
-            // ブロックが既に存在しているとき
-            blockValidation = IsOccupied((int)pos.x, (int)pos.y, block);
-            if(blockValidation != BlockValidation.Success)
+            // ブロックが既に存在しているとき 
+            // itemは盤面上にあるはずだから、Successのときだけ実行
+            if (itemBlockValidation == BlockValidation.Success) 
             {
-                return blockValidation;
+                itemBlockValidation = IsOccupied((int)pos.x, (int)pos.y, block);
+                if (itemBlockValidation == BlockValidation.Occupied)
+                {
+                    statusBlockValidation = itemBlockValidation;
+                    return statusBlockValidation;
+                }
+            }
+
+            // item がSuccess でもblock がOccupied, Overのときもあるので、ブロックのstatus管理
+            if (itemBlockValidation != BlockValidation.Success)
+            {
+                statusBlockValidation = itemBlockValidation;
             }
         }
 
-        return BlockValidation.Success;
+        return statusBlockValidation;
     }
 
     BlockValidation IsOnBoard (int x, int y)
@@ -78,10 +96,18 @@ public class Board : MonoBehaviour
         }
         else if(x < 0)
         {
+            if (overBlockNum < x * -1)
+            {
+                overBlockNum = x * -1;
+            }
             return BlockValidation.LeftOver;
         }
         else if (x >= width)
         {
+            if (overBlockNum < x - width + 1)
+            {
+                overBlockNum = x - width + 1;
+            }
             return BlockValidation.RightOver;
         }
         else

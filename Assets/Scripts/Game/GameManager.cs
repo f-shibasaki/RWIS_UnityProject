@@ -191,15 +191,24 @@ public class GameManager : MonoBehaviour
             SoundManager.instance.PlaySE("rotationSE");
             VibrationMng.Vibrate(30);
 
+            Transform tempActiveBlockTransform = activeBlock.transform;
+
             activeBlock.RotateLeft();
             nextKeyRotateTimer = Time.time + nextKeyRotateInterval;
             nextShakeTimer = Time.time + nextShakeInterval;
 
             if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
-                activeBlock.RotateLeft();
+                activeBlock.RotateRight();
             }
             MoveOnBoard(board.CheckPosition(activeBlock));
+
+            // 画面外から元の場所に戻した結果盤面上のブロックと被った場合は、あきらめて元のpos,rotationに戻す
+            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+            {
+                activeBlock.transform.position = tempActiveBlockTransform.position;
+                activeBlock.transform.rotation = tempActiveBlockTransform.rotation;
+            }
             return true;
         }
 
@@ -316,11 +325,11 @@ public class GameManager : MonoBehaviour
     {
         if (blockValidation == BlockValidation.RightOver)
         {
-            activeBlock.MoveLeft();
+            activeBlock.transform.position += new Vector3(-1, 0, 0) * board.overBlockNum;
         }
         else if (blockValidation == BlockValidation.LeftOver)
         {
-            activeBlock.MoveRight();
+            activeBlock.transform.position += new Vector3(1, 0, 0)* board.overBlockNum;
         }
         else if (blockValidation == BlockValidation.BottomOver)
         {
@@ -346,7 +355,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 currentPosition = activeBlock.transform.position;
             holdBlock = activeBlock;
-            holdBlock.transform.position = new Vector3(11, 0, -1);
+            holdBlock.transform.position = new Vector3(11, 0, -1); 
             holdBlock.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
             activeBlock = upcomingBlocks.Dequeue();
