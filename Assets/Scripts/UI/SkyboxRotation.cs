@@ -21,4 +21,9 @@ public class SkyboxRotation : MonoBehaviour
         }
         RenderSettings.skybox.SetFloat("_Rotation", rotation);
     }
+
+    void OnApplicationQuit()
+    {
+        RenderSettings.skybox.SetFloat("_Rotation", 0.0f);
+    }
 }
