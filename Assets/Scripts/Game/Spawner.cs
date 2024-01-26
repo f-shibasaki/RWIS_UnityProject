@@ -7,15 +7,30 @@ public class Spawner : MonoBehaviour
     [SerializeField] // 生成する7種類のブロックを保存
     Block[] Blocks;
 
+    List<int> numbers = new List<int>();
+    Queue<int> RandomBag = new Queue<int>();
+
     // ブロックをランダムに選択
     Block GetRandomBlock()
     {
-        int i = Random.Range(0, Blocks.Length);
-
-        if (Blocks[i]) 
+        if (RandomBag.Count <= 0)
         {
-            return Blocks[i];
-        } 
+            for (int i = 0; i < Blocks.Length; i++)
+            {
+                numbers.Add(i);
+            }
+            while (numbers.Count > 0)
+            {
+                int index = Random.Range(0, numbers.Count);
+                RandomBag.Enqueue(numbers[index]);
+                numbers.RemoveAt(index);
+            }
+        }
+
+        if (Blocks[RandomBag.Peek()])
+        {
+            return Blocks[RandomBag.Dequeue()];
+        }
         else
         {
             return null;
