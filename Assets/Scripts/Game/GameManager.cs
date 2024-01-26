@@ -199,7 +199,260 @@ public class GameManager : MonoBehaviour
 
             if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
             {
-                activeBlock.RotateRight();
+                // SRS
+                if (activeBlock.name == "Block_T(Clone)")
+                {
+                    if (activeBlock.transform.rotation.eulerAngles.z == 90.00f)
+                    {
+                        // #1
+                        activeBlock.MoveRight();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveUp();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                // #4
+                                activeBlock.MoveDown();
+                                activeBlock.MoveDown();
+                                activeBlock.MoveDown();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveLeft();
+                                    activeBlock.RotateRight();
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 180.00f)
+                    {
+                        // #1
+                        activeBlock.MoveLeft();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveDown();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveUp();
+                                activeBlock.MoveUp();
+                                activeBlock.MoveUp();
+                                activeBlock.MoveRight();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveLeft();
+                                    if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                    {
+                                        activeBlock.MoveDown();
+                                        activeBlock.MoveDown();
+                                        activeBlock.MoveRight();
+                                        activeBlock.RotateRight();
+                                    }
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 270.00f)
+                    {
+                        // #1
+                        activeBlock.MoveLeft();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            // #3
+                            activeBlock.MoveRight();
+                            activeBlock.MoveDown();
+                            activeBlock.MoveDown();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #4
+                                activeBlock.MoveLeft();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveRight();
+                                    activeBlock.RotateRight();
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 0.00f)
+                    {
+                        // #1
+                        activeBlock.MoveRight();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveDown();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveUp();
+                                activeBlock.MoveUp();
+                                activeBlock.MoveUp();
+                                activeBlock.MoveLeft();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveRight();
+                                    if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                    {
+                                        activeBlock.MoveDown();
+                                        activeBlock.MoveDown();
+                                        activeBlock.MoveLeft();
+                                        activeBlock.RotateRight();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else if (activeBlock.name == "Block_I(Clone)")
+                {
+                    if (activeBlock.transform.rotation.eulerAngles.z == 90.00f)
+                    {
+                        // #1
+                        activeBlock.MoveLeft();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveRight();
+                            activeBlock.MoveRight();
+                            activeBlock.MoveRight();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveLeft();
+                                activeBlock.MoveLeft();
+                                activeBlock.MoveLeft();
+                                activeBlock.MoveUp();
+                                activeBlock.MoveUp();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveRight();
+                                    activeBlock.MoveRight();
+                                    activeBlock.MoveRight();
+                                    activeBlock.MoveDown();
+                                    activeBlock.MoveDown();
+                                    activeBlock.MoveDown();
+                                    if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                    {
+                                        activeBlock.MoveUp();
+                                        activeBlock.MoveLeft();
+                                        activeBlock.MoveLeft();
+                                        activeBlock.RotateRight();
+                                    }
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 180.00f)
+                    {
+                        // #1
+                        activeBlock.MoveRight();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveDown();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveRight();
+                                    activeBlock.MoveRight();
+                                    activeBlock.MoveRight();
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 270.00f)
+                    {
+                        // #1
+                        activeBlock.MoveRight();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveRight();
+                                activeBlock.MoveRight();
+                                activeBlock.MoveRight();
+                                activeBlock.MoveDown();
+                                activeBlock.MoveDown();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveUp();
+                                    activeBlock.MoveLeft();
+                                    activeBlock.MoveLeft();
+                                    activeBlock.MoveLeft();
+                                    if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                    {
+                                        activeBlock.MoveDown();
+                                        activeBlock.MoveRight();
+                                        activeBlock.MoveRight();
+                                        activeBlock.RotateRight();
+                                    }
+                                }
+                            }
+                        }
+                    } else if (activeBlock.transform.rotation.eulerAngles.z == 0.00f)
+                    {
+                        // #1
+                        activeBlock.MoveRight();
+                        activeBlock.MoveRight();
+                        if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                        {
+                            // #2
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            activeBlock.MoveLeft();
+                            if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                            {
+                                // #3
+                                activeBlock.MoveUp();
+                                activeBlock.MoveRight();
+                                activeBlock.MoveRight();
+                                activeBlock.MoveRight();
+                                if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                {
+                                    // #4
+                                    activeBlock.MoveDown();
+                                    activeBlock.MoveDown();
+                                    activeBlock.MoveDown();
+                                    activeBlock.MoveLeft();
+                                    activeBlock.MoveLeft();
+                                    activeBlock.MoveLeft();
+                                    if (board.CheckPosition(activeBlock) == BlockValidation.Occupied)
+                                    {
+                                        activeBlock.MoveUp();
+                                        activeBlock.MoveUp();
+                                        activeBlock.MoveRight();
+                                        activeBlock.RotateRight();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else
+                {
+                    activeBlock.RotateRight();
+                }
             }
             MoveOnBoard(board.CheckPosition(activeBlock));
 
