@@ -559,10 +559,6 @@ public class GameManager : MonoBehaviour
 
         Block b = spawner.SpawnBlock();
         b.transform.position += new Vector3(7, -5 * 4, 0);
-        if (holdBlock)
-        {
-            b.transform.position -= new Vector3(0, -5, 0);
-        }
         upcomingBlocks.Enqueue(b);
 
         nextKeyDropTimer = Time.time;
@@ -616,6 +612,9 @@ public class GameManager : MonoBehaviour
             {
                 block.transform.position -= new Vector3(0, -5, 0);
             }
+            Block b = spawner.SpawnBlock();
+            b.transform.position += new Vector3(7, -5 * 4, 0);
+            upcomingBlocks.Enqueue(b);
             activeBlock.transform.position = currentPosition;
         }
 
